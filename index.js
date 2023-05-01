@@ -1,4 +1,4 @@
-const {Client, Intents, MessageEmbed} = require('discord.js');
+const {Client, MessageEmbed} = require('discord.js');
 const express = require('express');
 const bodyParser = require("body-parser");
 
@@ -6,7 +6,16 @@ const config = require('./config.json');
 const BotToken = config.token;
 const staffLogAuthKey = config.staffLogAuthKey;
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS]});
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildVoiceStates
+	],
+});
+
 const app = express();
 
 /*const exampleEmbed = new MessageEmbed()
@@ -16,20 +25,24 @@ const app = express();
 */
 let logChannel
 
+
+console.log("Yay")
 client.once('ready', () => {
-	console.log('Ready!');
-  client.user.setPresence({ 
-    activities: [{ 
-      name: 'Sethex',
-      type: "LISTENING"
-       }],
-    status: "online"
-    });
+  console.log('Ready!');
+  client.user.setPresence({
+    activities: [{
+      name: `Sethex`, 
+      type: ActivityType.Listening 
+    }],
+    status: 'Ready',
+  });
+  logChannel = client.channels.cache.get("996165862010654831");
+});
+
 
   //var offTopic = client.channels.cache.get("944619497325744248");
   //offTopic.send({ embeds: [exampleEmbed] });
-  logChannel = client.channels.cache.get("996165862010654831");
-});
+
 
 client.login(BotToken);
 
