@@ -1,4 +1,4 @@
-const {Client, MessageEmbed} = require('discord.js');
+const {Client, MessageEmbed, GatewayIntentBits, ActivityType} = require('discord.js');
 const express = require('express');
 const bodyParser = require("body-parser");
 
