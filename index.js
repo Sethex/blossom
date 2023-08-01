@@ -1,4 +1,4 @@
-const {Client, MessageEmbed, GatewayIntentBits, ActivityType} = require('discord.js');
+const { SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, MessageMentions: { USERS_PATTERN }, ThreadChannel, ComponentType, Client, MessageEmbed, GatewayIntentBits, ActivityType } = require("discord.js");
 const express = require('express');
 const bodyParser = require("body-parser");
 
@@ -46,7 +46,7 @@ client.once('ready', () => {
 
 client.login(BotToken);
 
-const listener = app.listen(1000, () => {
+const listener = app.listen(2500, () => {
   console.log("Listening to port")
 });
 
@@ -59,18 +59,29 @@ app.use(bodyParser.json());
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
-app.post("/shiftLog/", async(request, response,) => {
+app.post("/", async(request, response,) => {
   console.log("Request recieved")
   if (request.headers.authorization == staffLogAuthKey) {
     console.log("Request authorized")
     async function main() {
       console.log(request.body)
       for (const [key, value] of Object.entries(request.body)) {
-        const logEmbed = new MessageEmbed()
+        let profilePicUrl = "https://www.roblox.com/headshot-thumbnail/image?userId="
+        fetch("https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=" + value.UserId + "&size=180x180&format=Png&isCircular=false")
+        .then((response) => response.json())
+        .then((json) => {
+          if (json.data[0].state == 'Completed') {
+            console.log(json.data[0].imageUrl)
+            profilePicUrl = json.data[0].imageUrl
+          }
+        });
+
+
+        const logEmbed = new EmbedBuilder()
     	  .setColor('#0047AB')
         .setTitle('**' + value.UserName + '**')
         .setDescription("Minutes played: " + value.Minutes)
-        .setThumbnail('https://www.roblox.com/headshot-thumbnail/image?userId=' + value.UserId + '&width=420&height=420&format=png');
+        .setThumbnail(profilePicUrl);
         logChannel.send({embeds : [logEmbed]})
         
         await timer(100)
