@@ -36,14 +36,6 @@ client.once('ready', () => {
     status: 'Ready',
   });
   logChannel = client.channels.cache.get("829648756827357214");
-
-
-  const logEmbed = new EmbedBuilder()
-    	  .setColor('#0047AB')
-        .setTitle('**' + "Sethex_i" + '**')
-        .setDescription("Minutes played: " + 100)
-        .setThumbnail("https://tr.rbxcdn.com/30DAY-AvatarHeadshot-A506917C5534F85127F1B44651C21F29-Png/180/180/AvatarHeadshot/Png/noFilter");
-        logChannel.send({embeds : [logEmbed]})
 });
 
 
