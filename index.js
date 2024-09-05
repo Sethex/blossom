@@ -69,7 +69,6 @@ app.post("/", async(request, response,) => {
         .then((response) => response.json())
         .then((json) => {
           if (json.data[0].state == 'Completed') {
-            console.log(json.data[0].imageUrl)
             profilePicUrl = json.data[0].imageUrl
 
             const logEmbed = new EmbedBuilder()
