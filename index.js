@@ -35,7 +35,7 @@ client.once('ready', () => {
     }],
     status: 'Ready',
   });
-  logChannel = client.channels.cache.get("1279797461409599509");
+  logChannel = client.channels.cache.get("1280624433865949357");
 });
 
 
