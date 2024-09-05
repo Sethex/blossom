@@ -75,7 +75,7 @@ app.post("/", async(request, response,) => {
             const logEmbed = new EmbedBuilder()
             .setColor('#0047AB')
             .setTitle('**' + value.UserName + '**')
-            .setDescription("Minutes played: " + value.Minutes)
+            .setDescription("Minutes in zone+chatting: " + value.MinutesInZone + "\n Minutes in game: " + value.MinutesPlayed)
             .setThumbnail(profilePicUrl);
             logChannel.send({embeds : [logEmbed]})
           }
